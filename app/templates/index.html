@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Chcesz dodać walecznika?<a href="{{ url_for('index') }}">To go dodaj</a></p>
+    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}">To ich obejrzyj</a></p>
+
+    <a href="{{ url_for('fight_init') }}">Warszawo walcz!</a>
+
+{% endblock %}

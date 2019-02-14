@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <audio controls autoplay>
+      <source src="../static/sound/Combat.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <p>Chcesz dodać walecznika?<a href="{{ url_for('index') }}"> To go dodaj</a></p>
+    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}"> To ich obejrzyj</a></p>
+
+    <div id="game-container">
+        <div id="player-panel">
+            <div id="player-bars">
+                <div>
+                <span id=playerHP>?</span>
+                </div>
+                <div class="health-bar health-bar-pla" data-total="1000" data-value="1000">
+                  <div class="bar">
+                      <div class="hit"></div>
+                  </div>
+                </div>
+                 <div>
+                    <span id=playerSTA>?</span>
+                </div>
+                <div class="stamina-bar stamina-bar-pla" data-total="550" data-value="550">
+                  <div class="sta-bar">
+                      <div class="sta-hit"></div>
+                  </div>
+                </div>
+            </div>
+            <div id="fight-controls">
+                <button class="btn btn-danger action" id=strong onclick="strongAnimation('image')">Mocny atak</button>
+                <button class="btn btn-warning action" id=quick onclick="quickAnimation('image')">Szybki atak</button>
+                <button class="btn btn-info action" id=defend onclick="defendAnimation('image')">Obrona</button>
+                <button class="btn btn-primary action" id=dodge onclick="dodgeAnimation('image')">Unik</button>
+                <button class="btn btn-primary action" id=rst onclick="restAnimation('image')">Odpoczynek</button>
+                <button class="btn btn-primary action" id=dodge onclick="dieAnimation('image')">TESTUJ ŚMIERĆ</button>
+                <button class="btn btn-primary action" id=rst onclick="cheerAnimation('image')">TESTUJ ZWYCIĘSTWO</button>
+            </div>
+        </div>
+        <div id="fight-container">
+            <div id="player-sprite">
+                <div id="demo">
+                  <p id="image" onload="animateScript();">
+                  </p>
+                </div>
+            </div>
+            <div id="opponent-sprite">
+                <div id="op_demo">
+                  <p id="op_image" onload="op_animateScript();">
+                  </p>
+                </div>
+            </div>
+        </div>
+        <div id="opponent-panel">
+            <div>
+                <span id=opponentHP>?</span>
+            </div>
+             <div class="health-bar health-bar-opp" data-total="1000" data-value="1000">
+              <div class="bar">
+                  <div class="hit"></div>
+              </div>
+            </div>
+            <div>
+                <span id=opponentSTA>?</span>
+            </div>
+            <div class="stamina-bar stamina-bar-opp" data-total="550" data-value="550">
+              <div class="sta-bar">
+                  <div class="sta-hit"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
