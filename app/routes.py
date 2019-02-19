@@ -115,7 +115,9 @@ def fight_do():
     currFight.addAction(B)
 
     if FighterAI.health <= 0 or FighterPlr.health <= 0:
-        return render_template("index.html", title='Home Page')
+        print("TOOOOOOO JUŻŻŻŻŻŻŻŻŻ KONIEEEEEEEEEEEC!!")
+        return redirect("index.html")
+
     else:
         session['FighterAI'] = FighterAI.__dict__
         session['FighterPlr'] = FighterPlr.__dict__
@@ -126,7 +128,9 @@ def fight_do():
                 "playerHP": FighterPlr.health,
                 "playerSTA": FighterPlr.stamina,
                 "opponentHP": FighterAI.health,
-                "opponentSTA": FighterAI.stamina
+                "opponentSTA": FighterAI.stamina,
+                "playerAction": FighterPlr.actionMemory,
+                "opponentAction": FighterAI.actionMemory
                 })
     # return json.dumps({'file_id': record.file_id, 'filename': record.filename, 'links_to': record.links_to})
 

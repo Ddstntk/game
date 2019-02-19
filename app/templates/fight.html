@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <audio controls autoplay>
-      <source src="../static/sound/Combat.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <p>Chcesz dodać walecznika?<a href="{{ url_for('index') }}"> To go dodaj</a></p>
-    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}"> To ich obejrzyj</a></p>
+{#    <iframe src="../static/sound/audiohehe.mp3" allow="autoplay" id="audio" style="display:none"></iframe>#}
+{#    <audio id="player" autoplay loop>#}
+{#        <source src="../static/sound/audiohehe.mp3" type="audio/mp3">#}
+{#    </audio>#}
+{#    <p>Chcesz dodać walecznika?<a href="{{ url_for('index') }}"> To go dodaj</a></p>#}
+{#    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}"> To ich obejrzyj</a></p>#}
 
     <div id="game-container">
         <div id="player-panel">
@@ -29,13 +29,13 @@
                 </div>
             </div>
             <div id="fight-controls">
-                <button class="btn btn-danger action" id=strong onclick="strongAnimation('image')">Mocny atak</button>
-                <button class="btn btn-warning action" id=quick onclick="quickAnimation('image')">Szybki atak</button>
-                <button class="btn btn-info action" id=defend onclick="defendAnimation('image')">Obrona</button>
-                <button class="btn btn-primary action" id=dodge onclick="dodgeAnimation('image')">Unik</button>
-                <button class="btn btn-primary action" id=rst onclick="restAnimation('image')">Odpoczynek</button>
-                <button class="btn btn-primary action" id=dodge onclick="dieAnimation('image')">TESTUJ ŚMIERĆ</button>
-                <button class="btn btn-primary action" id=rst onclick="cheerAnimation('image')">TESTUJ ZWYCIĘSTWO</button>
+                <button class="btn btn-danger action" id=strong >Mocny atak</button>
+                <button class="btn btn-warning action" id=quick>Szybki atak</button>
+                <button class="btn btn-info action" id=defend>Obrona</button>
+                <button class="btn btn-primary action" id=dodge>Unik</button>
+                <button class="btn btn-primary action" id=rst>Odpoczynek</button>
+                <button class="btn btn-primary action" onclick="dieAnimation('image')">TESTUJ ŚMIERĆ</button>
+                <button class="btn btn-primary action" onclick="cheerAnimation('image')">TESTUJ ZWYCIĘSTWO</button>
             </div>
         </div>
         <div id="fight-container">

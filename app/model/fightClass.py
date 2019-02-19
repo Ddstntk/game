@@ -32,6 +32,7 @@ class fight():
 
         if len(self.actionList) > 1:
             print("wywoluje kill and win")
+            # self.actionListInfo = self.actionList
             self.killAndWin()
 
     def dupadupa(self):

@@ -77,7 +77,7 @@ a {
 #image {
   height: 256px;
   width: 256px;
-  background: url("../images/Char_3_No_Armor.png") 0px 0px;
+  background: url("../images/Char_3.png") 0px 0px;
   /*-webkit-transform: scaleX(-1);*/
   /*transform: scaleX(-1);*/
 }
@@ -172,8 +172,8 @@ body {
   border: 0;
   position: absolute;
   z-index: 1;
-  left: 1000px;
-  top: 20px;
+  left: 1500px;
+  top: 5px;
   height:150px;
   width: 150px;
 }
@@ -193,11 +193,11 @@ input[type="checkbox"][id^="cb"] {
 }
 
 label {
-  border: 1px solid #fff;
-  padding: 10px;
+  /*border: 1px solid #fff;*/
+  padding: 0px;
   display: block;
   position: relative;
-  margin: 10px;
+  margin: 0px;
   cursor: pointer;
 }
 
@@ -241,4 +241,35 @@ label img {
   transform: scale(0.9);
   box-shadow: 0 0 5px #333;
   z-index: -1;
+}
+
+.fighterSelect{
+  display: inline-block;
+}
+
+.fighterSelectImage{
+  width: 256px;
+  height: 256px;
+}
+
+#fighter1{
+  background-image: url("../images/Char_1.png");
+}
+#fighter2{
+  background-image: url("../images/Char_2.png");
+}
+#fighter3{
+  background-image: url("../images/Char_3.png");
+}
+#fighter4{
+  background-image: url("../images/Char_4.png");
+}
+#fighter5{
+  background-image: url("../images/Char_5.png");
+}
+#fighter6{
+  background-image: url("../images/Char_6.png");
+}
+#fighter7{
+  background-image: url("../images/Char_7.png");
 }

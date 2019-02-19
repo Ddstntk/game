@@ -16,6 +16,8 @@ class fighter():
         self.defendCost = 20
         self.dodgeCost = 25
 
+        self.actionMemory = ""
+
     def action(self, action, opponent, fight):
         pass
 
@@ -28,6 +30,7 @@ class fighter():
             atkStr = 7 * self.strg
             atkSpd = 15 * self.agi
             print(self.name, " szybko: str - ", atkStr, " spd - ", atkSpd)
+            self.actionMemory = "quick"
             return attack(atkStr, atkSpd)
 
     def strongAtc(self, fight):
@@ -39,6 +42,7 @@ class fighter():
             atkStr = 10 * self.strg
             atkSpd = 10 * self.agi
             print(self.name, " mocno: str - ", atkStr, " spd - ", atkSpd)
+            self.actionMemory = "strong"
             return attack(atkStr, atkSpd)
 
     def defend(self, fight):
@@ -50,6 +54,7 @@ class fighter():
             defSpd = 150
             defEff = 14 * self.sta
             print(self.name, " obrona: spd - ", defSpd, " spd - ", defEff)
+            self.actionMemory = "defend"
             return defence(defSpd, defEff)
 
     def dodge(self, fight):
@@ -61,8 +66,10 @@ class fighter():
             defSpd = 14 * self.agi
             defEff = 150
             print(self.name, " unik: spd - ", defSpd, " spd - ", defEff)
+            self.actionMemory = "dodge"
             return defence(10 * self.agi, 150)
 
     def rst(self, fight):
         # self.stamina += 75
+        self.actionMemory = "rest"
         return rest()

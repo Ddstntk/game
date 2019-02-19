@@ -33,45 +33,48 @@ window.onload = function animateScript(){
 }
 
 
-function delayAnim(tionA, actionB, milliseconds) {
+function delayAnim(action, milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
     if ((new Date().getTime() - start) > milliseconds){
       break;
     }
   }
-    actionB();
+    action();
 }
+
 
 
 function kickAss(actionPlayer, actionOpponent) {
   clearInterval(tID);
-  if(actionPlayer == "strong" || actionPlayer == "guick"){
+  if(actionPlayer == "strong" || actionPlayer == "quick"){
     if(actionOpponent == "strong" || actionOpponent == "quick"){
-      window[actionPlayer + "Animation"]("image")
-      delayAnim(window[actionOpponent + "Animation"]("op_image"))
+      setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 0)
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 1000)
+
+      // delayAnim(window[actionOpponent + "Animation"]("op_image"), 1000)
     }
     else if(actionOpponent == "defend" || actionOpponent == "dodge"){
-      window[actionPlayer + "Animation"]("image")
-      window[actionOpponent + "Animation"]("op_image")
+      setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 0)
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 1000)
     }
     else if(actionOpponent == "rest"){
-      window[actionPlayer + "Animation"]("image")
-      delayAnim(window[actionOpponent + "Animation"]("op_image"))
+      setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 0)
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 1000)
     }
   }
   else if(actionPlayer == "defend" || actionPlayer == "dodge") {
-    window[actionOpponent + "Animation"]("op_image")
-    window[actionPlayer + "Animation"]("image")
+    setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 0)
+    setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 1000)
   }
   else if(actionPlayer == "rest"){
     if(actionOpponent == "strong" || actionOpponent == "quick"){
-      window[actionOpponent + "Animation"]("op_image")
-      delayAnim(window[actionPlayer + "Animation"]("image"))
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 0)
+    setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 1000)
     }
     else {
-      window[actionOpponent + "Animation"]("op_image")
-      window[actionPlayer + "Animation"]("image")
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 0)
+    setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 1000)
     }
   }
   clearInterval(tID);
@@ -97,6 +100,8 @@ function strongAnimation(id){
       idleAnimation();
     }
   }, interval);
+  // var audio = new Audio("s");
+  //   audio.play();
 }
 
 function quickAnimation(id){

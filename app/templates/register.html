@@ -32,20 +32,34 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <ul>
-          <li><input type="checkbox" id="cb1" />
-            <label for="cb1"><img src="../static/images/Char_3_No_Armor.png" /></label>
-          </li>
-          <li><input type="checkbox" id="cb2" />
-            <label for="cb2"><img src="../static/images/Char_4.png" /></label>
-          </li>
-          <li><input type="checkbox" id="cb3" />
-            <label for="cb3"><img src="../static/images/Char_5.png" /></label>
-          </li>
-        </ul>
-
-
-
+        <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="1" checked> Atrakcyjny Wojak
+            <div class="fighterSelectImage" id="fighter1"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="2"> Zwiastun Zagłady
+                <div class="fighterSelectImage" id="fighter2"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="3"> Morowy Duch
+                <div class="fighterSelectImage" id="fighter3"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="4"> Straszny Morderca
+                <div class="fighterSelectImage" id="fighter4"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="5"> Krwawy Postrach
+                <div class="fighterSelectImage" id="fighter5"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="6"> Hatake Kakashi
+            <div class="fighterSelectImage" id="fighter6"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="fighterRadioButton" type="radio" value="7"> Tajemniczy Walecznik
+            <div class="fighterSelectImage" id="fighter7"></div>
+        </label>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}

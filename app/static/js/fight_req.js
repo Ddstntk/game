@@ -6,13 +6,14 @@ function updateParams(data){
 }
 
 $(function() {
-        $('button.action').bind('click', function() {
+        $('button.action').bind('click', function(event) {
           $.getJSON('/fight_do', {
             action: event.target.id
           }, function(data) {
             updateParams(data);
             staminaBar();
             healthBar();
+            kickAss(data["playerAction"], data["opponentAction"])
           });
           return false;
         });
