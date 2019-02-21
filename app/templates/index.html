@@ -1,9 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>Chcesz dodać walecznika?<a href="{{ url_for('index') }}">To go dodaj</a></p>
-    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}">To ich obejrzyj</a></p>
 
-    <a href="{{ url_for('fight_init') }}">Warszawo walcz!</a>
+    <a class="btn btn-danger gameMode" href="{{ url_for('fight_init') }}">Walcz z komputerem!</a>
+    <a class="btn btn-danger gameMode" href="{{ url_for('prepare_hotseat_init') }}">Walcz przez hotseat!</a>
+    <a class="btn btn-danger gameMode" href="{{ url_for('prepare_web_init') }}">Walcz przez internet!</a>
+    <div>
+        <p>Taki wygląd twój:</p>
+        <div style="display: inline-block;" id="player-sprite">
+            <div id="demo">
+              <p id="image" style='background: url({{ image }}) 0px 0px;' onload="idleAnimation();">
+              </p>
+            </div>
+        </div>
+        <div style="display: inline-block;">
+            <h2>PRAWO PIEKŁA GŁOSI:</h2>
+            <table>
+                <p>1. Jesteś potępionym wojownikiem i walczysz o przetrwanie</p>
+                <p>2. Mocny atak zadaje duże obrażenia, ale łatwo go uniknąć</p>
+                <p>3. Szybki atak ma większą szansę na trafienie, ale jest słaby</p>
+                <p>4. Unik pozwala uciec od ciosu, ale nie zawsze się udaje</p>
+                <p>5. Blok znacznie zmniejsza otrzymywane obrażenia i działa zawsze</p>
+                <p>6. Odpoczynek pozwala zregenerować wytrzymałość, wystawia jednak na atak</p>
+                <p>7. Twoimi przeciwnikami są najpotężniejsze demony podziemia, uważaj na siebie</p>
+            </table>
+        </div>
 
+    </div>
 {% endblock %}

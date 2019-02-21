@@ -76,6 +76,14 @@ function kickAss(actionPlayer, actionOpponent) {
       setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 0)
     setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 1000)
     }
+  }else if(actionPlayer == "win" || actionPlayer == "die"){
+      setTimeout(function(){window[actionPlayer + "Animation"]("image")}, 0)
+      setTimeout(function(){window[actionOpponent + "Animation"]("op_image")}, 1000)
+      if(actionPlayer == "win"){
+        setTimeout(function(){openModalWin()}, 2000)
+      } else {
+        setTimeout(function(){openModalDefeat()}, 2000)
+      }
   }
   clearInterval(tID);
   idleAnimation();
@@ -209,7 +217,7 @@ function dieAnimation(id){
     }
   }, interval);
 }
-function cheerAnimation(id){
+function winAnimation(id){
   clearInterval(tID);
   var position = 0 * 256; //start position for the image slicer
   const interval = 200; //100 ms of interval for the setInterval()

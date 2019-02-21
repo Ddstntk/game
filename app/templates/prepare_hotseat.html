@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <form action="" method="post">
+
+    <h1>Wybierz przeciwnika</h1>
+
+        {{ form.avatarId.label }}<br>
+        <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="1" checked> Atrakcyjny Wojak
+            <div class="fighterSelectImage" id="fighter1"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="2"> Zwiastun Zagłady
+                <div class="fighterSelectImage" id="fighter2"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="3"> Morowy Duch
+                <div class="fighterSelectImage" id="fighter3"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="4"> Straszny Morderca
+                <div class="fighterSelectImage" id="fighter4"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="5"> Krwawy Postrach
+                <div class="fighterSelectImage" id="fighter5"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="6"> Hatake Kakashi
+            <div class="fighterSelectImage" id="fighter6"></div>
+        </label>
+            <label class="fighterSelect">
+            <input name="avatarId" type="radio" value="7"> Tajemniczy Walecznik
+            <div class="fighterSelectImage" id="fighter7"></div>
+        </label>
+
+        <p>{{ form.submit() }}</p>
+
+    </form>
+{% endblock %}

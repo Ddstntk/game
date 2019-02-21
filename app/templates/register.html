@@ -32,34 +32,58 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+
+        <p>Punkty do rozdania:</p>
+        <p id="total">20</p>
+
+        <div>
+            {{ form.strength.label }}<br>
+            <div class="btn btn-danger" id="decrease" onclick="decreaseValue('strength')" value="Decrease Value">-</div>
+            <input name ="strength" type="number" id="strength" value="1" />
+            <div class="btn btn-danger" id="increase" onclick="increaseValue('strength')" value="Increase Value">+</div>
+
+            {{ form.agility.label }}<br>
+            <div class="btn btn-danger" id="decrease" onclick="decreaseValue('agility')" value="Decrease Value">-</div>
+            <input name ="agility" type="number" id="agility" value="1" />
+            <div class="btn btn-danger" id="increase" onclick="increaseValue('agility')" value="Increase Value">+</div>
+
+            {{ form.stamina.label }}<br>
+            <div class="btn btn-danger" id="decrease" onclick="decreaseValue('stamina')" value="Decrease Value">-</div>
+            <input name ="stamina" type="number" id="stamina" value="1" />
+            <div class="btn btn-danger" id="increase" onclick="increaseValue('stamina')" value="Increase Value">+</div>
+        </div>
+
+        {{ form.avatarId.label }}<br>
         <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="1" checked> Atrakcyjny Wojak
+            <input name="avatarId" type="radio" value="1" checked> Atrakcyjny Wojak
             <div class="fighterSelectImage" id="fighter1"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="2"> Zwiastun Zagłady
+            <input name="avatarId" type="radio" value="2"> Zwiastun Zagłady
                 <div class="fighterSelectImage" id="fighter2"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="3"> Morowy Duch
+            <input name="avatarId" type="radio" value="3"> Morowy Duch
                 <div class="fighterSelectImage" id="fighter3"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="4"> Straszny Morderca
+            <input name="avatarId" type="radio" value="4"> Straszny Morderca
                 <div class="fighterSelectImage" id="fighter4"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="5"> Krwawy Postrach
+            <input name="avatarId" type="radio" value="5"> Krwawy Postrach
                 <div class="fighterSelectImage" id="fighter5"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="6"> Hatake Kakashi
+            <input name="avatarId" type="radio" value="6"> Hatake Kakashi
             <div class="fighterSelectImage" id="fighter6"></div>
         </label>
             <label class="fighterSelect">
-            <input name="fighterRadioButton" type="radio" value="7"> Tajemniczy Walecznik
+            <input name="avatarId" type="radio" value="7"> Tajemniczy Walecznik
             <div class="fighterSelectImage" id="fighter7"></div>
         </label>
+
         <p>{{ form.submit() }}</p>
+
     </form>
 {% endblock %}

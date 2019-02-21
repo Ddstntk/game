@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from config import Config
 from werkzeug.contrib.cache import MemcachedCache
 from flask_session import Session
+from flask_socketio import SocketIO, join_room, emit
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
@@ -19,5 +20,5 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
-
+print(__name__)
 # from app import routes

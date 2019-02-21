@@ -9,7 +9,7 @@
 {#    <p>Chcesz oglądaj waleczników?<a href="{{ url_for('index') }}"> To ich obejrzyj</a></p>#}
 
     <div id="game-container">
-        <p>Jesteś {{ stronger}}, {{ agiliter }} i {{ staminer }} niż demon, z którym walczysz</p>
+        <p>O bogowie! WALKA!</p>
         <div id="player-panel">
             <div id="player-bars">
                 <div>
@@ -30,11 +30,11 @@
                 </div>
             </div>
             <div id="fight-controls">
-                <button class="btn btn-danger action" id=strong >Mocny atak - 50</button>
-                <button class="btn btn-warning action" id=quick>Szybki atak - 30</button>
-                <button class="btn btn-info action" id=defend>Obrona - 20</button>
-                <button class="btn btn-primary action" id=dodge>Unik - 25</button>
-                <button class="btn btn-primary action" id=rst>Odpoczynek + 75</button>
+                <button name="HS" class="btn btn-danger actionHs" id=strongHs >Mocny atak - 50</button>
+                <button name="HS" class="btn btn-warning actionHs" id=quickHs>Szybki atak - 30</button>
+                <button name="HS" class="btn btn-info actionHs" id=defendHs>Obrona - 20</button>
+                <button name="HS" class="btn btn-primary actionHs" id=dodgeHs>Unik - 25</button>
+                <button name="HS" class="btn btn-primary actionHs" id=rstHs>Odpoczynek + 75</button>
 {#                <button class="btn btn-primary action" onclick="dieAnimation('image')">TESTUJ ŚMIERĆ</button>#}
 {#                <button class="btn btn-primary action" onclick="cheerAnimation('image')">TESTUJ ZWYCIĘSTWO</button>#}
             </div>
@@ -54,6 +54,13 @@
             </div>
         </div>
         <div id="opponent-panel">
+            <div id="fight-controls">
+            <button name="HSO" class="btn btn-danger actionHsO" id=strongHsO disabled>Mocny atak - 50</button>
+            <button name="HSO" class="btn btn-warning actionHsO" id=quickHsO disabled>Szybki atak - 30</button>
+            <button name="HSO" class="btn btn-info actionHsO" id=defendHsO disabled>Obrona - 20</button>
+            <button name="HSO" class="btn btn-primary actionHsO" id=dodgeHsO disabled>Unik - 25</button>
+            <button name="HSO" class="btn btn-primary actionHsO" id=rstHsO disabled>Odpoczynek + 75</button>
+        </div>
             <div>
                 <span id=opponentHP>?</span>
             </div>
@@ -72,33 +79,7 @@
             </div>
         </div>
     </div>
-        <div id="myModalWin" class="modal">
-
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Gratulacje, wygrana - przyznaj sobie punkt!</p>
-              <form action="" method="post">
-                  <div>
-                    <label>
-                        <input name="levelup" type="radio" value="strength"> Siłą
-                    </label>
-                        <label>
-                        <input name="levelup" type="radio" value="agility"> Zręczność
-                    </label>
-                        <label>
-                        <input name="levelup" type="radio" value="stamina"> Wytrzymałość
-                    </label>
-                  </div>
-
-                  <p>{{ form.submit() }}</p>
-
-              </form>
-          </div>
-
-        </div>
-
-     <div id="myModalDefeat" class="modal">
+    <div id="myModalDefeat" class="modal">
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
@@ -106,5 +87,4 @@
           </div>
 
      </div>
-
 {% endblock %}

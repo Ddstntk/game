@@ -31,7 +31,7 @@ class fight():
         self.actionList.append(action)
 
         if len(self.actionList) > 1:
-            print("wywoluje kill and win")
+            # print("wywoluje kill and win")
             # self.actionListInfo = self.actionList
             self.killAndWin()
 
@@ -39,45 +39,47 @@ class fight():
         print(self.actionList)
 
     def killAndWin(self):
-        print("Zaczynajo walczyc!")
+        # print("Zaczynajo walczyc!")
 
         actionA = self.actionList[0]
         actionB = self.actionList[1]
         print(self.FighterA, self.actionList[0])
         print(self.FighterB, self.actionList[1])
 
-        print("Walczo!")
+        # print("Walczo!")
 
         if isinstance(actionA, attack):
-            print("wykrylem atak")
+            # print("wykrylem atak")
             if isinstance(actionB, attack):                                                           # obaj atakują
-                self.FighterA.health -= int(actionA.power * (random.randrange(7, 13))/10)
-                self.FighterB.health -= int(actionB.power * (random.randrange(7, 13)/10))
+                self.FighterA.health -= int(actionA.power * (random.randrange(7, 13))/10)%150
+                self.FighterB.health -= int(actionB.power * (random.randrange(7, 13)/10))%150
                 print(self.FighterA.health, self.FighterB.health)
 
             elif isinstance(actionB, defence):                                                        # A atak B obrona
-                speedDiff = actionA.speed - actionB.speed
-                if speedDiff < -50:
-                    chanceFactor = (speedDiff + 100)/2
+                speedDiff = abs(actionA.speed) - abs(actionB.speed)
+                if speedDiff > -35:
+                    chanceFactor = (speedDiff + 150)/2
                     chanceFactor += int(chanceFactor * (random.randrange(8, 18)/10))
-                    if chanceFactor > -45:
-                        self.FighterA.health -= int(actionA.power * (random.randrange(7, 13)/10) * 100/actionB.efficacy)
+                    if chanceFactor > 130:
+                        self.FighterB.health -= int(actionA.power * (random.randrange(7, 13)/10) * 100 / ((actionB.efficacy*1.1) + 1))%150
 
             elif isinstance(actionB, rest):                                                        # A atak B obrona
                 if self.FighterB.stamina < 550:
                     self.FighterB.stamina += 75
-                self.FighterB.health -= int(actionA.power * (random.randrange(7, 13)/10))
+                self.FighterB.health -= int(actionA.power * (random.randrange(7, 13)/10))%150
 
         elif isinstance(actionA, defence):                                                           # A obrona B atak
-            print("wykrylem obronę")
+            # print("wykrylem obronę")
 
             if isinstance(actionB, attack):
-                speedDiff = actionB.speed - actionA.speed
-                if speedDiff < -50:
-                    chanceFactor = (speedDiff + 100) / 2
+                speedDiff = abs(actionB.speed) - abs(actionA.speed)
+                print(speedDiff)
+                if speedDiff > -35:
+                    chanceFactor = (speedDiff + 150) / 2
                     chanceFactor += int(chanceFactor * (random.randrange(8, 18)/10))
-                    if chanceFactor > -45:
-                        self.FighterB.health -= int(actionB.power * (random.randrange(7, 13)/10) * 100 / actionA.efficacy)
+                    print(chanceFactor)
+                    if chanceFactor > 130:
+                        self.FighterA.health -= int(actionB.power * (random.randrange(7, 13)/10) * 100 / ((actionA.efficacy*1.1) + 1))%150
 
             elif isinstance(actionB, defence):                                                       # Obaj się bronią
                 pass
@@ -87,9 +89,9 @@ class fight():
                     self.FighterB.stamina += 75
 
         elif isinstance(actionA, rest):
-            print("wykrylem odpoczynek")
+            # print("wykrylem odpoczynek")
             if isinstance(actionB, attack):                                                           # obaj atakują
-                self.FighterA.health -= int(actionB.power * (random.randrange(7, 13))/10)
+                self.FighterA.health -= int(actionB.power * (random.randrange(7, 13))/10)%150
                 if self.FighterA.stamina < 550:
                     self.FighterA.stamina += 75
                 print(self.FighterA.health, self.FighterB.health)
