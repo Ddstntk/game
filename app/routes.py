@@ -8,12 +8,18 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, WinForm, PrepareHotseat, PrepareWeb
 from app.models import User
 from app.model.fightClass import fight
+from app.model.roomClass import roomC
 from app.model.fighterClass import fighter
 from app.model.AiClass import AIfighter
 from app.model.playerClass import fighterPlayer
 from sqlalchemy import text, update
+from app import socketio, emit, join_room, leave_room, \
+    close_room, rooms, disconnect, send
+from threading import Lock
 import json
 import gc
+ROOMS = {}
+
 
 @app.route('/')
 @app.route('/index')
@@ -294,103 +300,157 @@ def fight_hotseat_do():
                 })
     # return json.dumps({'file_id': record.file_id, 'filename': record.filename, 'links_to': record.links_to})
 
-@app.route('/fight_web_init', methods=['GET'])
+
+@app.route('/test_socketio', methods=['GET', 'POST'])
 @login_required
-def fight_web_init():
-    opponentAvatar = session.get("opponentAvatar", None)
+def test_socketio():
+    form = WinForm(request.form)
+    print("no to formularzyk 1")
+
+    # if request.method == 'POST':
+    #     print("no to formularzyk 2")
+    #     # print(current_user.id)
+    #     param = form.levelup.data
+    #     id = str(current_user.id)
+    #     print(param)
+    #     print(id)
+    #
+    #     setattr(current_user, param, getattr(current_user, param) + 1)
+    #     db.session.commit()
+    #     # query = "UPDATE user SET param: = param: +1 WHERE id=userid"
+    #     # db.session.execute("UPDATE user SET "+ param + "=" + param + "+1 WHERE id=" + id + ";")
+    #
+    #     flash('Congratulations, you leveled up!')
+    #     return redirect(url_for('login'))
+    return render_template("test_socketio.html",
+                           title='Walkaaa - web',
+                           image=url_for('static', filename='images/Char_' + str(current_user.avatarId) + '.png'),
+                           op_image=url_for('static', filename='images/Char_' + str(4) + '.png'),
+                           form=form
+                           )
+
+
+# @app.route('/fight_host_web', methods=['GET', 'POST'])
+# @login_required
+# def fight_host_web():
+#     form = WinForm(request.form)
+#     print("no to formularzyk 1")
+#
+#     # if request.method == 'POST':
+#     #     print("no to formularzyk 2")
+#     #     # print(current_user.id)
+#     #     param = form.levelup.data
+#     #     id = str(current_user.id)
+#     #     print(param)
+#     #     print(id)
+#     #
+#     #     setattr(current_user, param, getattr(current_user, param) + 1)
+#     #     db.session.commit()
+#     #     # query = "UPDATE user SET param: = param: +1 WHERE id=userid"
+#     #     # db.session.execute("UPDATE user SET "+ param + "=" + param + "+1 WHERE id=" + id + ";")
+#     #
+#     #     flash('Congratulations, you leveled up!')
+#     #     return redirect(url_for('login'))
+#     return render_template("fight_host_web.html",
+#                            title='Walkaaa - web',
+#                            image=url_for('static', filename='images/Char_' + str(current_user.avatarId) + '.png'),
+#                            op_image=url_for('static', filename='images/Char_' + str(4) + '.png'),
+#                            form=form
+#                            )
+
+
+#
+# @socketio.on('leave', namespace='/test')
+# def leave(message):
+#     leave_room(message['room'])
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'In rooms: ' + ', '.join(rooms()),
+#           'count': session['receive_count']})
+#
+#
+# @socketio.on('close_room', namespace='/test')
+# def close(message):
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response', {'data': 'Room ' + message['room'] + ' is closing.',
+#                          'count': session['receive_count']},
+#          room=message['room'])
+#     close_room(message['room'])
+#
+
+@socketio.on('create')
+def on_create(data):
+    """Create a game lobby"""
+    print("To je data", data)
+    gm = roomC(current_user.id)
     PlayerStr = current_user.strength
     PlayerAgi = current_user.agility
     PlayerSta = current_user.stamina
-    statsSum = PlayerAgi + PlayerAgi + PlayerSta
 
-    OpponentStr = decompose(statsSum)
-    OpponentAgi = decompose(statsSum)
-    OpponentSta = decompose(statsSum)
+    gm.setFirst(fighterPlayer(current_user.username, 1000, 550, PlayerStr, PlayerAgi, PlayerSta).__dict__)
 
-    FighterPlr = fighterPlayer("Gracz", 1000, 550, PlayerStr, PlayerAgi, PlayerSta)
-    FighterOpponent = fighterPlayer("Wojak", 1000, 550, OpponentStr, OpponentAgi, OpponentSta)
-
-    currFight = fight(FighterPlr, FighterOpponent)
-
-    session['FighterOpponent'] = FighterOpponent.__dict__
-    session['FighterPlr'] = FighterPlr.__dict__
-    session['currFight'] = currFight.__dict__
-
-    return render_template("fight_hotseat.html",
-                           title='Walkaaa - hotseat',
-                           # form=form,
-                           image =url_for('static', filename='images/Char_'+str(current_user.avatarId)+'.png'),
-                           op_image=url_for('static', filename='images/Char_'+str(opponentAvatar)+'.png'),
-                           )
+    room = data["name"]
+    ROOMS[room] = gm
+    join_room(room)
+    print(ROOMS)
+    emit('join_room', {'room': room})
 
 
-@app.route('/prepare_web_init', methods=['GET', 'POST'])
-@login_required
-def prepare_web_init():
-    form = PrepareWeb(request.form)
-    if request.method == 'POST':
-        roomName = form.roomName.data
-
-        return redirect(url_for('fight_web_init'))
-    return render_template("prepare_web.html",
-                           title='Walkaaa - hotseat',
-                           form=form,
-                           )
-
-
-@app.route('/fight_web_do', methods=['GET'])
-@login_required
-def fight_web_do():
-    FighterOpponent = fighterPlayer(**session.get("FighterOpponent"))
-    FighterPlr = fighterPlayer(**session.get("FighterPlr"))
-    currFight = fight(FighterPlr, FighterOpponent)
-    action = request.args.get('action', 0, type=str)
-    actionOpponent = request.args.get('actionOpponent', 0, type=str)
-    print(action)
-    print(actionOpponent)
-    print("xd")
-    B = FighterPlr.action(action.replace("Hs",""), FighterOpponent, currFight)
-    A = FighterOpponent.action(actionOpponent.replace("HsO",""), FighterPlr, currFight)
-
-    currFight.addAction(B)
-    currFight.addAction(A)
-    #
-    # for obj in gc.get_objects():
-    #     if isinstance(obj, fighter):
-    #         print(obj.name)
-
-    if FighterOpponent.health <= 0 or FighterPlr.health <= 0:
-        print("TOOOOOOO JUŻŻŻŻŻŻŻŻŻ KONIEEEEEEEEEEEC!!")
-        return json.dumps({
-            "playerHP": FighterPlr.health,
-            "playerSTA": FighterPlr.stamina,
-            "opponentHP": FighterOpponent.health,
-            "opponentSTA": FighterOpponent.stamina,
-            "playerAction": "win" if FighterPlr.health > FighterOpponent.health else "die",
-            "opponentAction": "die" if FighterPlr.health > FighterOpponent.health else "win"
-        })
-
-    else:
-        session['FighterOpponent'] = FighterOpponent.__dict__
-        session['FighterPlr'] = FighterPlr.__dict__
-        session['currFight'] = currFight.__dict__
-
-
-        return json.dumps({
-                "playerHP": FighterPlr.health,
-                "playerSTA": FighterPlr.stamina,
-                "opponentHP": FighterOpponent.health,
-                "opponentSTA": FighterOpponent.stamina,
-                "playerAction": FighterPlr.actionMemory,
-                "opponentAction": FighterOpponent.actionMemory
-                })
-    # return json.dumps({'file_id': record.file_id, 'filename': record.filename, 'links_to': record.links_to})
-
-
-
-@app.route('/js/<path:path>')
-def send_js(path): return send_from_directory('js', path)
-
+# @socketio.on('join', namespace='/test')
+# def join(message):
+#     message["userId"] = current_user.id
+#     PlayerStr = current_user.strength
+#     PlayerAgi = current_user.agility
+#     PlayerSta = current_user.stamina
 #
-# if __name__ == '__app__':
-#     app.run(debug = False, host = '0.0.0.0', port = 5050)
+#     # if not 'FighterA' in globals():
+#     #     FighterA = fighterPlayer("Gracz", 1000, 550, PlayerStr, PlayerAgi, PlayerSta)
+#     # elif not 'FighterB' in globals():
+#     #     FighterB = fighterPlayer("Gracz", 1000, 550, PlayerStr, PlayerAgi, PlayerSta)
+#     #     print(FighterA)
+#     #     print(FighterB)
+#
+#     print(rooms())
+#     join_room(message['room'])
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'In rooms: ' + ', '.join(rooms()),
+#           'count': session['receive_count']})
+
+
+@socketio.on('join', namespace='/test')
+def join(data):
+    print(rooms())
+    print(ROOMS)
+    """Join a game lobby"""
+    # username = data['username']
+    room = data['room']
+    if room in ROOMS:
+        # add player and rebroadcast game object
+        # rooms[room].add_player(username)
+        PlayerStr = current_user.strength
+        PlayerAgi = current_user.agility
+        PlayerSta = current_user.stamina
+        ROOMS[room].setSecond(fighterPlayer(current_user.username, 1000, 550, PlayerStr, PlayerAgi, PlayerSta).__dict__)
+        # ROOMS[room].setFight().__dict__
+        join_room(room)
+        send(ROOMS[room].to_json(), room=room)
+    else:
+        emit('error', {'error': 'Unable to join room. Room does not exist.'})
+
+
+@socketio.on('my_room_event', namespace='/test')
+def send_room_message(message):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    message["userId"] = current_user.id
+    print(message)
+
+    emit('my_response',
+         {'data': message['data'], 'count': session['receive_count']},
+         room=message['room'])
+
+
+
+
+# if __name__ == '__main__':
+socketio.run(app, debug=True, host='0.0.0.0', port='5050')

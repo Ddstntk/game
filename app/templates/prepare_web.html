@@ -1,16 +1,16 @@
-{% extends "base.html" %}
-
-{% block content %}
-        <form action="" method="post">
-
-    <h1>Załóż pokój</h1>
-
-            {{ form.roomName.label }}<br>
-            {{ form.roomName(size=32) }}<br>
-            {% for error in form.roomName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        <p>{{ form.submit() }}</p>
-
-    </form>
-{% endblock %}
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#        <form action="" method="post">#}
+{##}
+{#    <h1>Załóż pokój</h1>#}
+{##}
+{#            {{ form.roomName.label }}<br>#}
+{#            {{ form.roomName(size=32) }}<br>#}
+{#            {% for error in form.roomName.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        <p>{{ form.submit() }}</p>#}
+{##}
+{#    </form>#}
+{#{% endblock %}#}

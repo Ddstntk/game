@@ -3,10 +3,18 @@
 from .fightClass import *
 import random
 
-class room():
-    def __init__(self, id, name, host):
-        self.id = id
+class roomC():
+    def __init__(self, host):
+        # self.id = id
         self.host = host
-        self.name = name
-        self.fighters[0] = self.host
+        # self.name = name
+        # self.fighters = []
+        # self.fighters[0] = self.host
+    def setFirst(self, fighter):
+        self.firstFighter = fighter
 
+    def setSecond(self, fighter):
+        self.secondFighter = fighter
+
+    def setFight(self):
+        self.fight = fight(self.firstFighter, self.secondFighter).__dict__
